@@ -1,0 +1,56 @@
+<!doctype html> 
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <title>ATM</title>
+
+    <meta name="description" content="Cash dispenser app, version 4.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- build:css styles/allstyles.css -->
+    <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../node_modules/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css" rel="stylesheet">
+    <link href="styles/mainstyle.css" rel="stylesheet">
+    <!-- endbuild -->
+</head>
+
+<body ng-app="atmApp">
+
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<div class="container">
+    <div ng-view=""></div>
+</div>
+
+<footer>
+    <div class="col-xs-8 col-xs-push-2">
+        This cash dispenser emulator is written by <a href="http://zaliznyak.16mb.com"> Yuri Zaliznyak</a>,
+        source code is available at Github, follow
+        <a href="https://github.com/YuriZaliznyak/CashMachine04"> link</a>.
+    </div>
+</footer>
+
+<!-- build:js scripts/allscripts.js -->
+<script src="../node_modules/jquery/dist/jquery.js"></script>
+<script src="../node_modules/angular/angular.js"></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+<script src="../node_modules/angular-resource/angular-resource.js"></script>
+<script src="../node_modules/angular-route/angular-route.js"></script>
+<script src="../node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
+<script src="../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+
+<script src="scripts/app.js"></script>
+<script src="scripts/controllers/startPageController.js"></script>
+<script src="scripts/controllers/balancePageController.js"></script>
+<script src="scripts/controllers/manageUsersPageController.js"></script>
+<script src="scripts/controllers/timer.js"></script>
+<script src="scripts/services/mainservice.js"></script>
+<!-- endbuild -->
+
+</body>
+
+</html>

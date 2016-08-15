@@ -1,0 +1,54 @@
+<div class="row">
+
+    <div class="col-xs-12">
+        <h1>Welcome to our ATM application</h1>
+    </div>
+
+    <div id="loginErrorModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Error</h4>
+                </div>
+                <div class="modal-body">
+                    <p>{{modalMessage2Show}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            ng-click="closeErrorModal();"><span
+                            id="loginErrorModalButton"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <form name="loginForm" class="form-horizontal" ng-submit="loginToAccount(customer);">
+        <div class="form-group"
+             ng-class="{ 'has-error' :  loginForm.inputCardNumber.$error.required && loginForm.inputCardNumber.$dirty }">
+            <label for="inputCardNumber" class="col-xs-4 control-label">Please enter your credit card number</label>
+            <div class="col-xs-8">
+                <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                       ng-model="customer.creditCardNumber" class="form-control" name="inputCardNumber"
+                       id="inputCardNumber" maxlength="16" minlength="16" placeholder="Credit card number (16 digits)"
+                       required>
+            </div>
+        </div>
+        <div class="form-group"
+             ng-class="{ 'has-error' :  loginForm.inputPinCode.$error.required && loginForm.inputPinCode.$dirty }">
+            <label for="inputPinCode" class="col-xs-4 control-label">PIN code</label>
+            <div class="col-xs-8">
+                <input type="password" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                       ng-model="customer.pinCode" class="form-control" id="inputPinCode" minlength="4" maxlength="4"
+                       name="inputPinCode" placeholder="PIN (4 digits)" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-offset-4 col-xs-8">
+                <button type="submit" class="btn btn-primary pull-right active">Enter</button>
+            </div>
+        </div>
+    </form>
+
+</div>

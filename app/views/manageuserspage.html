@@ -1,0 +1,108 @@
+<div class="container">
+    <h1>Welcome to our ATM application</h1>
+    <br>
+    <h2>Accounts management page</h2>
+
+    <script type="text/ng-template" id="editCustomerModalContent">
+
+        <div class="modal-header">
+            <h3 class="modal-title">{{modalTitle}}</h3>
+        </div>
+
+        <div class="modal-body">
+
+            <form name="editCustomerForm" class="form-horizontal" id="editCustomerForm" ng-submit="ok(editedCustomer);">
+                <div class="form-group">
+                    <label for="customerName" class="col-xs-4 control-label">Name</label>
+                    <div class="col-xs-8">
+                        <input type="text" ng-model=editedCustomer.userName placeholder={{currCustomer.userName}}
+                               class="form-control" id="customerName">
+                    </div>
+                </div>
+                <div class="form-group"
+                     ng-class="{ 'has-error' :  editCustomerForm.cardNumber.$error.minlength &&
+                     editCustomerForm.cardNumber.$error.maxlength && editCustomerForm.cardNumber.$dirty }">
+                    <label for="cardNumber" class="col-xs-4 control-label">Card number</label>
+                    <div class="col-xs-8">
+                        <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                               ng-model=editedCustomer.cardNumber placeholder={{currCustomer.cardNumber}}
+                               class="form-control" minlength="16" maxlength="16" id="cardNumber">
+                    </div>
+                </div>
+                <div class="form-group"
+                     ng-class="{ 'has-error' :  editCustomerForm.accountNumber.$error.minlength &&
+                     editCustomerForm.accountNumber.$error.maxlength && editCustomerForm.accountNumber.$dirty }">
+                    <label for="accountNumber" class="col-xs-4 control-label">Account number</label>
+                    <div class="col-xs-8">
+                        <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                               ng-model=editedCustomer.accountNumber placeholder={{currCustomer.accountNumber}}
+                               class="form-control" minlength="20" maxlength="20" id="accountNumber">
+                    </div>
+                </div>
+                <div class="form-group"
+                    ng-class="{ 'has-error' :  editCustomerForm.expDate.$error.pattern && editCustomerForm.expDate.$dirty }">
+                    <label for="expDate" class="col-xs-4 control-label">Valid until (MM/YYYY)</label>
+                    <div class="col-xs-8">
+                        <input type="text" ng-model=editedCustomer.expDate placeholder={{currCustomer.expDate}} name="expDate"
+                               class="form-control" id="expDate" minlength="7" maxlength="7"
+                               ng-pattern="/^(0?[1-9]|1[012])\/(19\d{2}|[2-9]\d{3})$/">
+                    </div>
+                </div>
+                <div class="form-group"
+                     ng-class="{ 'has-error' :  editCustomerForm.pinCode.$error.minlength &&
+                     editCustomerForm.pinCode.$error.mfxlength && editCustomerForm.pinCode.$dirty }">
+                    <label for="pinCode" class="col-xs-4 control-label">Pin code</label>
+                    <div class="col-xs-8">
+                        <input type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) | event.charCode == 46"
+                               ng-model=editedCustomer.pinCode placeholder={{currCustomer.pinCode}}
+                               class="form-control" minlength="4" maxlength="4" id="pinCode">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="currentBalance" class="col-xs-4 control-label">Balance</label>
+                    <div class="col-xs-8">
+                        <input type="text" ng-model=editedCustomer.currentBalance placeholder={{(currCustomer.currentBalance/100)}}
+                               class="form-control" id="currentBalance">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" ng-disabled="editCustomerForm.$invalid"
+                    form="editCustomerForm">Submit</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+
+    </script>
+
+
+    <div class="row">
+        <div class="btn-group">
+            <button type="button" class="btn btn-info" ng-click="showEditCustomerModal(null)">Add new</button>
+            <button type="button" class="btn btn-default btn-danger" ng-click="cancel()">Delete all</button>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Card number</th>
+            <th>Balance</th>
+            <th>Operation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="customer in allATMUsers">
+            <td>{{customer.userName}}</td>
+            <td>{{customer.cardNumber}}</td>
+            <td>{{(customer.currentBalance/100).toFixed(2)}}</td>
+            <td>
+                <button type="button" class="btn btn-default" ng-click="showEditCustomerModal(customer)">Edit</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
