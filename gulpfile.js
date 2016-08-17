@@ -35,7 +35,7 @@ gulp.task('less', function () {
 });
 
 // Minification-uglification
-gulp.task('minifyuglify', function () {
+gulp.task('minifyuglify', ['jshint'], function () {
     return gulp.src('./app/**/*.html')
         .pipe(usemin({
             css: [cleancss({compatibility: 'ie8'}), rev()],

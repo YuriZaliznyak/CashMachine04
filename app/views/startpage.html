@@ -23,6 +23,34 @@
         </div>
     </div>
 
+    <script type="text/ng-template" id="adminLoginModalContent">
+
+        <div class="modal-header">
+            <h3 class="modal-title">Enter admin password</h3>
+        </div>
+
+        <div class="modal-body">
+
+            <form name="enterAdminPasswors" class="form-horizontal" id="enterAdminPasswors"
+                  ng-submit="adminLoginOk(enterAdminPasswors);">
+                <div class="form-group">
+                    <label for="adminPassword" class="col-xs-4 control-label">Password</label>
+                    <div class="col-xs-8">
+                        <input type="password" ng-model=enterAdminPasswors.adminPassword placeholder="enter password here"
+                               class="form-control" id="adminPassword" required>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" form="enterAdminPasswors">Submit</button>
+            <button class="btn btn-warning" type="button" ng-click="adminLoginCancel()">Cancel</button>
+        </div>
+
+    </script>
+
 
     <form name="loginForm" class="form-horizontal" ng-submit="loginToAccount(customer);">
         <div class="form-group"
@@ -51,7 +79,7 @@
         </div>
     </form>
     <div class="col-xs-8 col-xs-push-4">
-        <span>Admin access to manage users </span><button type="button" class="btn btn-danger btn-xs">Go!</button>
+        <a href ng-click="openAdminLoginModal()">Manage ATM users (admin access)</a>
     </div>
 
 </div>

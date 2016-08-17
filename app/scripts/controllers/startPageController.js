@@ -4,8 +4,8 @@
 
     angular.module('atmApp')
 
-        .controller('startPageController', ['$scope', '$window', '$timeout', 'manageUserDataFactory',
-            function ($scope, $window, $timeout, manageUserDataFactory) {
+        .controller('startPageController', ['$scope', '$location', '$timeout', '$uibModal', 'manageUserDataFactory',
+            function ($scope, $location, $timeout, $uibModal, manageUserDataFactory) {
 
                 var time2ShowModal = 10, // seconds
                     timeFromTimerStart,
@@ -68,7 +68,7 @@
                                     else { // pin codes match, navigate to the balance page
                                         //customerDataFromDatabase.pinCode = '****';
                                         manageUserDataFactory.saveUserToLocalStorage('currentCustomer', customerDataFromDatabase);
-                                        $window.location.href = '#balancepage';
+                                        $location.path('balancepage');
                                     }
                                 }
                                 else {
@@ -83,5 +83,30 @@
                         );
                 };
 
+                $scope.openAdminLoginModal = function () {
+                    var adminLoginModalInstance = $uibModal.open({
+                        animation: true,
+                        templateUrl: 'adminLoginModalContent',
+                        controller: 'adminLoginModalController',
+                    });
+                };
+
+            }])
+
+        .controller('adminLoginModalController', ['$scope', '$uibModalInstance', '$log', '$location',
+            function ($scope, $uibModalInstance, $log, $location) {
+
+
+                $scope.adminLoginOk = function (adminPasswordFormContent) {
+                    $uibModalInstance.close();
+                    $location.path('manageusers');
+                    console.log(adminPasswordFormContent);
+
+                };
+
+                $scope.adminLoginCancel = function () {
+                    console.log('Admin login aborted');
+                    $uibModalInstance.dismiss('cancel');
+                };
             }]);
 })();
