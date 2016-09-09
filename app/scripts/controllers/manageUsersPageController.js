@@ -3,27 +3,11 @@
 
     angular.module('atmApp')
 
-        .controller('manageUsersPageController', ['$scope', '$window', 'manageUserDataFactory', '$uibModal', '$log',
-            function ($scope, $window, manageUserDataFactory, $uibModal, $log) {
+        .controller('manageUsersPageController', ['$scope', '$window', 'manageUserDataFactory', '$uibModal', '$log', '$location',
+            function ($scope, $window, manageUserDataFactory, $uibModal, $log, $location) {
 
                 $scope.allATMUsers = [];
                 var animationsEnabled = true;
-
-                function loadAllATMUsers() {
-                    var customersDataFromDatabase = {};
-                    manageUserDataFactory.getAllATMUsers()
-                        .query()
-                        .$promise
-                        .then(
-                            function (response) {
-                                customersDataFromDatabase = response;
-                                $scope.allATMUsers = customersDataFromDatabase;
-                            },
-                            function (response) {
-                                $scope.Message2Show = 'Promise is not resolved while downloading users data: ' + response.status + ' ' + response.statusText;
-                            }
-                        );
-                }
 
                 $scope.showEditCustomerModal = function (customer) {
                     var editCustomerModalInstance = $uibModal.open({
@@ -52,6 +36,36 @@
                     });
                 };
 
+                $scope.navigate2startpage = function() {
+                    $location.path('startpage');
+                };
+
+                function loadAllATMUsers() {
+                    var customersDataFromDatabase = {};
+                    manageUserDataFactory.getAllATMUsers()
+                        .query()
+                        .$promise
+                        .then(
+                            function (response) {
+                                for (var eachUser in response){
+                                    if (response.hasOwnProperty(eachUser)){
+                                        var currentUser = response[eachUser];
+                                        for(var keyName in currentUser){
+                                            if (currentUser.hasOwnProperty(keyName) && keyName=='currentBalance'){
+                                                currentUser[keyName] = 0.01*currentUser[keyName];//cents2dollars, for screen representation
+                                            }
+                                        }
+                                    }
+                                }
+                                customersDataFromDatabase = response;
+                                $scope.allATMUsers = customersDataFromDatabase;
+                            },
+                            function (response) {
+                                $scope.Message2Show = 'Promise is not resolved while downloading users data: ' + response.status + ' ' + response.statusText;
+                            }
+                        );
+                }
+
                 loadAllATMUsers();
 
             }])
@@ -68,13 +82,14 @@
                     if ($scope.editCustomerForm.expDate.$dirty && typeof customer2Update.expDate == 'undefined'){
                         console.log('Date touched! new expdate undefined!!', customer2Update.expDate);
                     }
-
+                    console.log('HERE111 before re-assignment::', currCustomer);
                     for (var customerProperty in customer2Update) {
-                        if (customerProperty !== null) {
-                            $scope.currCustomer[customerProperty] = customer2Update[customerProperty];
+                        if (customer2Update.hasOwnProperty(customerProperty)) {
+                            currCustomer[customerProperty] = customer2Update[customerProperty];
                         }
                     }
-                    manageUserDataFactory.putUserById($scope.currCustomer._id).updateUserRecord($scope.currCustomer)
+                    console.log('HERE222 before update initited::', currCustomer);
+                    manageUserDataFactory.putUserById(currCustomer._id).updateUserRecord(currCustomer)
                         .$promise
                         .then(
                             function (response) {
@@ -89,6 +104,7 @@
 
                 $scope.cancel = function () {
                     $uibModalInstance.dismiss('cancel');
+                    console.log('Edit customer modal: Changes aborted');
                 };
             }]);
 

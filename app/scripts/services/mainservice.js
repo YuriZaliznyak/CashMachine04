@@ -6,7 +6,8 @@
 
         .constant('atmUsersDataPath', 'http://localhost:3000')
 
-        .factory('manageUserDataFactory', ['$resource', '$localStorage', 'atmUsersDataPath', function ($resource, $localStorage, atmUsersDataPath) {
+        .factory('manageUserDataFactory', ['$resource', '$localStorage', 'atmUsersDataPath',
+            function ($resource, $localStorage, atmUsersDataPath) {
             return {
                 
                 getUserByCardNumber: function (cardNumberString) {

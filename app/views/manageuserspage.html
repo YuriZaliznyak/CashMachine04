@@ -61,7 +61,7 @@
                 <div class="form-group">
                     <label for="currentBalance" class="col-xs-4 control-label">Balance</label>
                     <div class="col-xs-8">
-                        <input type="text" ng-model=editedCustomer.currentBalance placeholder={{(currCustomer.currentBalance/100)}}
+                        <input type="text" ng-model=editedCustomer.currentBalance placeholder={{currCustomer.currentBalance}}
                                class="form-control" id="currentBalance">
                     </div>
                 </div>
@@ -80,8 +80,9 @@
 
     <div class="row">
         <div class="btn-group">
-            <button type="button" class="btn btn-info" ng-click="showEditCustomerModal(null)">Add new</button>
-            <button type="button" class="btn btn-default btn-danger" ng-click="cancel()">Delete all</button>
+            <button type="button" class="btn btn-info" ng-click="navigate2startpage()">Go back</button>
+            <button type="button" class="btn btn-success" ng-click="showEditCustomerModal(null)">Add new</button>
+            <button type="button" class="btn btn-danger" ng-click="cancel()">Delete all</button>
         </div>
     </div>
 
@@ -98,7 +99,7 @@
         <tr ng-repeat="customer in allATMUsers">
             <td>{{customer.userName}}</td>
             <td>{{customer.cardNumber}}</td>
-            <td>{{(customer.currentBalance/100).toFixed(2)}}</td>
+            <td>{{(customer.currentBalance*1.0).toFixed(2)}}</td>
             <td>
                 <button type="button" class="btn btn-default" ng-click="showEditCustomerModal(customer)">Edit</button>
             </td>
